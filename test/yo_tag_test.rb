@@ -14,7 +14,7 @@ class YoTagTest < Minitest::Test
     refute_nil ::YoTag::VERSION
   end
 
-  def test_it_uses_tmp_dir
+  def test_it_uses_root_for_target_dir
     dir = '/tmp/foobar'
     YoTag::TagFS.root = dir
     tfs = YoTag::TagFS.new('a')
@@ -48,5 +48,27 @@ class YoTagTest < Minitest::Test
     assert File.exist?(File.join(tfs.target_dir, 'timestamp'))
 
     after
+  end
+
+  def test_it_moves_directory_to_tag_dirs
+    #FileUtils.mv Dir.glob('test*.rb'), 'test'
+  end
+  def test_it_moves_multiple_things_to_tag_dirs
+  end
+
+  def test_tag_lookup
+  end
+
+  def test_extract_tags_from_path
+    path = "./dev./book./ruby./oh/shit./rails_antipatterns.pdf"
+    tags = path.scan(YoTag::Tree::regex_tags_in_path)
+    assert tags == ["dev", "book", "ruby"]
+  end
+
+  def test_return_valid_paths
+    all_paths = [".", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/yo_tag", "./dev.", "./dev./book.", "./dev./book./javascript.", "./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby.", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby.", "./dev./ruby./yo_tag"]
+    results = all_paths.select {|x| x =~ YoTag::Tree::regex_path_has_file }
+    valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./yo_tag"]
+    assert results == valid
   end
 end

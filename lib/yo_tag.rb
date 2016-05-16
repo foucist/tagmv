@@ -28,4 +28,15 @@ module YoTag
     end
   end
 
+  class Tree
+    def self.regex_tags_in_path
+      #http://idiosyncratic-ruby.com/11-regular-extremism.html
+      /\.\/\K[^\/]+(?=\.\/)/
+    end
+
+    def self.regex_path_has_file
+      /#{regex_tags_in_path}.*[^\.]$/
+    end
+  end
+
 end
