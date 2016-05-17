@@ -1,5 +1,6 @@
 require "yo_tag/version"
 require 'fileutils'
+require 'find'
 
 module YoTag
 
@@ -30,12 +31,20 @@ module YoTag
 
   class Tree
     def self.regex_tags_in_path
-      #http://idiosyncratic-ruby.com/11-regular-extremism.html
-      /\.\/\K[^\/]+(?=\.\/)/
+      /\/\K.+?(?=\.\/)/
     end
 
     def self.regex_path_has_file
       /#{regex_tags_in_path}.*[^\.]$/
+    end
+
+    def self.tags(file)
+      file[TagFS.root.length..-1].scan(regex_tags_in_path).reject {|x| x =~ /\//}
+    end
+
+    def self.scan_tree
+      files = Find.find(TagFS.root).select {|x| x =~ regex_path_has_file }
+      files.map { |file| tags(file) }
     end
   end
 

@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pry'
 
 class YoTagTest < Minitest::Test
   def before 
@@ -60,8 +61,9 @@ class YoTagTest < Minitest::Test
   end
 
   def test_extract_tags_from_path
-    path = "./dev./book./ruby./oh/shit./rails_antipatterns.pdf"
-    tags = path.scan(YoTag::Tree::regex_tags_in_path)
+    path = "/home/test/t/./dev./book./ruby./oh/shit./rails_antipatterns.pdf"
+    root = "/home/test/t/"
+    tags = path[root.length..-1].scan(YoTag::Tree::regex_tags_in_path).reject {|x| x =~ /\//}
     assert tags == ["dev", "book", "ruby"]
   end
 
@@ -71,4 +73,25 @@ class YoTagTest < Minitest::Test
     valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./yo_tag"]
     assert results == valid
   end
+
+  def build_test_tree
+    files = ["dev./book./ruby./rails_antipatterns.pdf", "dev./ruby./yo_tag/", "dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "dev./ruby./oh/snap./foobar"]
+    files.each do |file|
+      path = File.join(@dir, file)
+      if file[-1] == "/"
+        FileUtils.mkdir_p(path)
+      else
+        FileUtils.mkdir_p(File.dirname(path))
+        FileUtils.touch(path)
+      end
+    end
+  end
+
+  def test_tree_scan
+    before
+    build_test_tree
+    assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "ruby"]], YoTag::Tree.scan_tree.uniq
+    after
+  end
+
 end
