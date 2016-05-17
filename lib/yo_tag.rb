@@ -39,6 +39,7 @@ module YoTag
     end
 
     def self.tags(file)
+      raise StandardError.new('Invalid file path given') unless file[/^#{TagFS.root}/]
       file[TagFS.root.length..-1].scan(regex_tags_in_path).reject {|x| x =~ /\//}
     end
 
