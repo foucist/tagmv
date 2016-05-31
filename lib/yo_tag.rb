@@ -29,7 +29,20 @@ module YoTag
     end
   end
 
+  class Entry
+    attr_reader :file, :tags
+    def initialize(file, tags)
+      @file = file
+      @tags = tags
+    end
+  end
+
   class Tree
+    attr_accessor :entries
+    def initialize(entries = [])
+      @entries = entries
+    end
+
     def self.regex_tags_in_path
       /\/\K.+?(?=\.\/)/
     end
@@ -45,8 +58,12 @@ module YoTag
 
     def self.scan_tree
       files = Find.find(TagFS.root).select {|x| x =~ regex_path_has_file }
-      files.map { |file| tags(file) }
+      tree = Tree.new
+      files.map { |file| tree.entries << Entry.new(file,tags(file)) }
+      tree
     end
+
+
   end
 
 end

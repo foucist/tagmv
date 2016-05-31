@@ -69,6 +69,7 @@ class YoTagTest < Minitest::Test
 
   def test_return_valid_paths
     all_paths = [".", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/yo_tag", "./dev.", "./dev./book.", "./dev./book./javascript.", "./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby.", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby.", "./dev./ruby./yo_tag"]
+
     results = all_paths.select {|x| x =~ YoTag::Tree::regex_path_has_file }
     valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./yo_tag"]
     assert results == valid
@@ -90,7 +91,8 @@ class YoTagTest < Minitest::Test
   def test_tree_scan
     before
     build_test_tree
-    assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "ruby"]], YoTag::Tree.scan_tree.uniq
+    tree = YoTag::Tree.scan_tree
+    assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "ruby"]], tree.entries.map {|x| x.tags }.uniq
     after
   end
 
