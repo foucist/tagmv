@@ -59,10 +59,27 @@ module YoTag
     def self.scan_tree
       files = Find.find(TagFS.root).select {|x| x =~ regex_path_has_file }
       tree = Tree.new
-      files.map { |file| tree.entries << Entry.new(file,tags(file)) }
+      files.map do |file|
+        next if file =~ /\/.+\.\/[^.]+\/.+\./  # break when /dev./oh/blah./foo
+        tree.entries << Entry.new(file,tags(file))
+      end
       tree
     end
 
+    # Find.find('.').select {|x| x =~ /([^\/]+\/)*([^\/]+\/)*\.\/.*/}
+    # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "yo_tag"=>{}}}}
+    def self.build_tree
+      Dir.chdir(TagFS.root)
+      Dir["**/**./*"].inject({}) do |hash,path|
+        tree = hash
+        path.split("/").each do |n|
+          tree[n] ||= {}
+          tree = tree[n]
+          break if n[-1] != "."
+        end
+        hash
+      end
+    end
 
   end
 

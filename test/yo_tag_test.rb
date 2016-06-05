@@ -96,4 +96,13 @@ class YoTagTest < Minitest::Test
     after
   end
 
+  def test_build_tree
+    before
+    build_test_tree
+    result = YoTag::Tree.build_tree
+    hash_tree = {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "yo_tag"=>{}}}}
+    assert_equal hash_tree, result
+    after
+  end
+
 end
