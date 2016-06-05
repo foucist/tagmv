@@ -1,28 +1,20 @@
 # YoTag
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/yo_tag`. To experiment with that code, run `bin/console` for an interactive prompt.
+File tagging by moving files into tag-based directories.
 
-TODO: Delete this and the text above, and describe your gem
+The directories that represent tags are organized hierarchically (either by # of items that have the tag or some other method).
+
+- Organizes using the plain file system
+- Extremely flexible (no tag limit, no tag naming restrictions, hierarchical tags, no file naming restrictions, can tag all files and directories).
+- Transparent to other applications, since it works directly with the file system.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'yo_tag'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
 
     $ gem install yo_tag
 
 ## Usage
 
-TODO: Write usage instructions here
+    $ tag <files/directories> -t <tags>
 
 ## Development
 
@@ -32,5 +24,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/yo_tag.
+Bug reports and pull requests are welcome on GitHub at https://github.com/foucist/yo_tag.
 
