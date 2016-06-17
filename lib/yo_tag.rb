@@ -37,7 +37,7 @@ module YoTag
     end
   end
 
-  class Tree
+  class TreeFS
     attr_accessor :entries
     def initialize(entries = [])
       @entries = entries
@@ -56,9 +56,9 @@ module YoTag
       file[TagFS.root.length..-1].scan(regex_tags_in_path).reject {|x| x =~ /\//}
     end
 
-    def self.scan_tree
+    def self.scan_tree_entries
       files = Find.find(TagFS.root).select {|x| x =~ regex_path_has_file }
-      tree = Tree.new
+      tree = TreeFS.new
       files.map do |file|
         next if file =~ /\/.+\.\/[^.]+\/.+\./  # break when /dev./oh/blah./foo
         tree.entries << Entry.new(file,tags(file))
@@ -68,7 +68,7 @@ module YoTag
 
     # Find.find('.').select {|x| x =~ /([^\/]+\/)*([^\/]+\/)*\.\/.*/}
     # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "yo_tag"=>{}}}}
-    def self.build_tree
+    def self.scan_tree_hash
       Dir.chdir(TagFS.root)
       Dir["**/**./*"].inject({}) do |hash,path|
         tree = hash
