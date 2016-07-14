@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
+
+require 'yo_tag'
+
+$:.unshift File.expand_path('./lib')
+require 'yo_tag/cli'
+require 'yo_tag/client'
+
+opts = YoTag::CLI.parse
+client = YoTag::Client.new(opts)
+
+puts client.tags.inspect
+puts client.files.inspect

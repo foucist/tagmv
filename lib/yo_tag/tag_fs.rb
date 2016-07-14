@@ -9,21 +9,33 @@ module YoTag
     end
 
     attr_accessor :tags, :files
-    def initialize(tags, files = nil)
-      @tags = tags
-      @files = files
+    def initialize(opts={})
+      @tags = opts[:tags]
+      @files = opts[:files]
     end
+
+    def tag_order
+      Tree.tags
+    end
+
+    #def tags
+    #  tag_order & tags
+    #end
 
     def target_dir
       File.join(TagFS.root, *tags)
     end
 
-    def prep_dirs
+    def prepare_dir
       FileUtils.mkdir_p(target_dir) 
     end
 
-    def move_file
-      prep_dirs && FileUtils.mv(files, target_dir)
+    def move_files
+      FileUtils.mv(files, target_dir)
+    end
+
+    def transfer
+      prepare_dir && move_files
     end
   end
 end
