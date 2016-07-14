@@ -116,4 +116,9 @@ class YoTagTest < Minitest::Test
     after
   end
 
+  def test_tag_entry_counts
+  end
+
+  def test_rebuild_tree
+  end
 end
