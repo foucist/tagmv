@@ -15,6 +15,9 @@ module TagMv
 
     def tag_order
     end
+    def tags
+      @tags.map {|x| x.gsub(/$/, '.') }
+    end
 
     def target_dir
       File.join(Filesystem.root, *tags)

@@ -24,11 +24,9 @@ class FilesystemTest < Minitest::Test
     tags = ['a', 'b', 'c']
     tfs = TagMv::Filesystem.new(tags: tags)
 
-    before = File.exist?(tfs.target_dir)
-    assert_equal false, before
-
+    assert File.exist?(tfs.target_dir) == false
     tfs.prepare_dir
-    assert File.exist?(tfs.target_dir)
+    assert File.exist?(tfs.target_dir) == true
 
     after
   end

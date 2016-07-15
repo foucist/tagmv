@@ -14,3 +14,14 @@ puts opts.inspect
 
 #puts client.tags.inspect
 #puts client.files.inspect
+
+puts TagMv::Filesystem.root
+if File.exist?(TagMv::Filesystem.root)
+  puts "we're good! 👍"
+else
+  puts "missing dir"
+  exit
+end
+
+tfs = TagMv::Filesystem.new(opts)
+tfs.transfer
