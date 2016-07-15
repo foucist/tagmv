@@ -2,14 +2,15 @@
 
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 
-require 'yo_tag'
+require 'tag_mv'
 
 $:.unshift File.expand_path('./lib')
-require 'yo_tag/cli'
-require 'yo_tag/client'
+require 'tag_mv/command_line'
+#require 'tag_mv/client'
 
-opts = YoTag::CLI.parse
-client = YoTag::Client.new(opts)
+opts = TagMv::CommandLine.parse
+puts opts.inspect
+#client = TagMv::Client.new(opts)
 
-puts client.tags.inspect
-puts client.files.inspect
+#puts client.tags.inspect
+#puts client.files.inspect

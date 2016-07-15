@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 
 require 'choice'
-require 'yo_tag'
+require 'tag_mv'
 
 
 Choice.options do
@@ -29,7 +29,8 @@ end
 
 opts = parse
 
-client = YoTag::Client.new(opts)
-
-puts client.tags.inspect
-puts client.files.inspect
+#client = TagMv::Client.new(opts)
+#
+#puts client.tags.inspect
+#puts client.files.inspect
+puts opts.inspect

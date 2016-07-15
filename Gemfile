@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in yo_tag.gemspec
+# Specify your gem's dependencies in tag_mv.gemspec
 gemspec

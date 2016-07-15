@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'yo_tag/version'
+require 'tag_mv/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "yo_tag"
-  spec.version       = YoTag::VERSION
+  spec.name          = "tag_mv"
+  spec.version       = TagMv::VERSION
   spec.authors       = ["James Robey"]
   spec.email         = ["james.robey@gmail.com"]
 

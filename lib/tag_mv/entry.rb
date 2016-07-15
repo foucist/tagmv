@@ -1,11 +1,9 @@
-require 'pry'
-
-module YoTag
-  class Client
+module TagMv
+  class Entry
     attr_accessor :tags, :files
     def initialize(opts={})
       @tags = opts[:tags]
-      @files = opts[:files]
+      @file = opts[:file]
     end
   end
 end
