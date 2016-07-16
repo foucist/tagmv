@@ -10,19 +10,24 @@ class FilesystemTest < Minitest::Test
     FileUtils.remove_entry @dir
   end
 
+
   def test_it_uses_root_for_target_dir
     dir = '/tmp/foobar'
     TagMv::Filesystem.root = dir
     tags = ['a','b']
-    tfs = TagMv::Filesystem.new(tags: ['a','b'])
-    assert tfs.target_dir == [dir, *tags].join('/')
+
+    tfs = TagMv::Filesystem.new(tags: tags, files: [])
+    def tfs.tag_order; tags; end
+
+    assert tfs.target_dir == "/tmp/foobar/a./b."
   end
 
   def test_it_makes_tag_dirs
     before
 
     tags = ['a', 'b', 'c']
-    tfs = TagMv::Filesystem.new(tags: tags)
+    tfs = TagMv::Filesystem.new(tags: tags, files: [])
+    def tfs.tag_order; tags; end
 
     assert File.exist?(tfs.target_dir) == false
     tfs.prepare_dir
@@ -38,7 +43,9 @@ class FilesystemTest < Minitest::Test
     file = File.join(@dir, 'timestamp')
     assert FileUtils.touch(file)
 
-    tfs = TagMv::Filesystem.new(tags: tags, files: file)
+    tfs = TagMv::Filesystem.new(tags: tags, files: [file])
+    def tfs.tag_order; tags; end
+
     tfs.transfer
     assert File.exist?(File.join(tfs.target_dir, 'timestamp'))
 

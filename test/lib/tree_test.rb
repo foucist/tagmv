@@ -22,6 +22,24 @@ class TreeTest < Minitest::Test
     end
   end
 
+  def test_tag_counts
+    tree = TagMv::Tree.new
+    def tree.entries
+      entry = Struct.new(:tags)
+      entries = 2.times.map { entry.new(["foo", "bar", "baz", "zoo"]) }
+      entries << entry.new(["zoo"])
+    end
+    assert tree.tag_counts == {"foo"=>2, "bar"=>2, "baz"=>2, "zoo" =>3}
+  end
+
+  def test_tag_order
+    tree = TagMv::Tree.new
+    def tree.tag_counts
+      {"foo"=>4, "bar"=>4, "baz"=>4, "zoo" => 5}
+    end
+    assert tree.tag_order == ["zoo", "bar", "baz", "foo"]
+  end
+
   #def test_tag_lookup
   #end
 
