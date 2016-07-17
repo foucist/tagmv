@@ -6,22 +6,6 @@ require 'tag_mv'
 
 $:.unshift File.expand_path('./lib')
 require 'tag_mv/command_line'
-#require 'tag_mv/client'
+require 'tag_mv/runner'
 
-opts = TagMv::CommandLine.parse
-puts opts.inspect
-#client = TagMv::Client.new(opts)
-
-#puts client.tags.inspect
-#puts client.files.inspect
-
-puts TagMv::Filesystem.root
-if File.exist?(TagMv::Filesystem.root)
-  puts "we're good! 👍"
-else
-  puts "missing dir"
-  exit
-end
-
-tfs = TagMv::Filesystem.new(opts)
-tfs.transfer
+TagMv::Runner.run

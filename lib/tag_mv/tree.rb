@@ -38,7 +38,7 @@ module TagMv
       tree = Tree.new
       files.map do |file|
         next if file =~ /\/.+\.\/[^.]+\/.+\./  # break when /dev./oh/blah./foo
-        tree.with(file: file, tags: tags(file))
+        tree.with(files: [file], tags: tags(file))
       end
       tree
     end
