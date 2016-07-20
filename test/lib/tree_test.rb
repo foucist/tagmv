@@ -59,7 +59,7 @@ class TreeTest < Minitest::Test
   def test_select_valid_paths
     all_paths = [".", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/tag_mv", "./dev.", "./dev./book.", "./dev./book./javascript.", "./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby.", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby.", "./dev./ruby./tag_mv"]
 
-    results = all_paths.select {|x| x =~ TagMv::Tree::regex_path_has_file }
+    results = all_paths.select {|x| x =~ TagMv::Tree.path_has_file_regex }
     valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./tag_mv"]
     assert results == valid
   end

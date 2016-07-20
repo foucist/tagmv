@@ -22,12 +22,12 @@ module TagMv
       Dir.entries(path) == ['.', '..']
     end
 
-    def cleanup_tag_dirs
-    # TODO:  should only remove empty *TAG* dirs..
-
-      Find.find(TagMv::Filesystem.root).reverse_each do |path|
-        if FileTest.directory?(path)
-          Dir.rmdir(path) if empty_dir?(path)
+    def prune_tag_dirs
+      Find.find(TagMv::Filesystem.root) do |path|
+        if path =~ /\.$/ && path !~ TagMv::Tree.false_tag_regex
+          if FileTest.directory?(path)
+            Dir.rmdir(path) if empty_dir?(path)
+          end
         end
       end
     end
@@ -35,7 +35,7 @@ module TagMv
     def run
       update_tree
       move_files
-      cleanup_tag_dirs
+      prune_tag_dirs
     end
   end
 end
