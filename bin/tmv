@@ -2,10 +2,10 @@
 
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 
-require 'tag_mv'
+require 'tagmv'
 
 $:.unshift File.expand_path('./lib')
-require 'tag_mv/command_line'
-require 'tag_mv/runner'
+require 'tagmv/command_line'
+require 'tagmv/runner'
 
-TagMv::Runner.run
+Tagmv::Runner.run

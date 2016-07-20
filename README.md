@@ -1,4 +1,4 @@
-# TagMv
+# Tagmv
 
 File tagging by moving files into tag-based directories.
 
@@ -10,7 +10,7 @@ The directories that represent tags are organized hierarchically (either by # of
 
 ## Installation
 
-    $ gem install tag_mv
+    $ gem install tagmv
 
 ## Usage
 
@@ -24,5 +24,5 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/foucist/tag_mv.
+Bug reports and pull requests are welcome on GitHub at https://github.com/foucist/tagmv.
 

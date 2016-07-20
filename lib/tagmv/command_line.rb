@@ -1,6 +1,6 @@
 require 'choice'
 
-module TagMv
+module Tagmv
   module CommandLine
     extend self
 
@@ -27,7 +27,7 @@ module TagMv
   end
 end
 
-#module TagMv
+#module Tagmv
 #  class CommandLine
 #    def self.parse
 #      Choice.options do

@@ -3,7 +3,7 @@
 $LOAD_PATH.unshift(File.expand_path(File.dirname(__FILE__) + '/../lib'))
 
 require 'choice'
-require 'tag_mv'
+require 'tagmv'
 
 
 Choice.options do
@@ -29,7 +29,7 @@ end
 
 opts = parse
 
-#client = TagMv::Client.new(opts)
+#client = Tagmv::Client.new(opts)
 #
 #puts client.tags.inspect
 #puts client.files.inspect

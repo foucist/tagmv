@@ -1,4 +1,4 @@
-module TagMv
+module Tagmv
   class PrunePath
     attr_reader :path
     def initialize(path)
@@ -6,7 +6,7 @@ module TagMv
     end
 
     def tag_dir?
-      path =~ /\.$/ && path !~ TagMv::Tree.false_tag_regex
+      path =~ /\.$/ && path !~ Tagmv::Tree.false_tag_regex
     end
 
     def empty_dir?
@@ -18,8 +18,8 @@ module TagMv
     end
 
     def self.prune_tag_dirs
-      Find.find(TagMv::Filesystem.root).reverse_each do |path|
-        TagMv::PrunePath.new(path).rmdir
+      Find.find(Tagmv::Filesystem.root).reverse_each do |path|
+        Tagmv::PrunePath.new(path).rmdir
       end
     end
 

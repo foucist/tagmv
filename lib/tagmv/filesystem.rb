@@ -1,6 +1,6 @@
 require 'fileutils'
 
-module TagMv
+module Tagmv
   class Filesystem
     @root = File.expand_path('~/t')
     class << self

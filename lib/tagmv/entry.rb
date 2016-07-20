@@ -1,4 +1,4 @@
-module TagMv
+module Tagmv
   class Entry
     attr_accessor :tags, :files
     def initialize(opts={})

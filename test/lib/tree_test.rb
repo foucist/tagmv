@@ -3,14 +3,14 @@ require 'test_helper'
 class TreeTest < Minitest::Test
   def before 
     @dir = Dir.mktmpdir
-    TagMv::Filesystem.root = @dir
+    Tagmv::Filesystem.root = @dir
   end
   def after
     FileUtils.remove_entry @dir
   end
 
   def build_test_tree
-    files = ["dev./book./ruby./rails_antipatterns.pdf", "dev./ruby./tag_mv/", "dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "dev./ruby./oh/snap./foobar"]
+    files = ["dev./book./ruby./rails_antipatterns.pdf", "dev./ruby./tagmv/", "dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "dev./ruby./oh/snap./foobar"]
     files.each do |file|
       path = File.join(@dir, file)
       if file[-1] == "/"
@@ -23,7 +23,7 @@ class TreeTest < Minitest::Test
   end
 
   def test_tag_counts
-    tree = TagMv::Tree.new
+    tree = Tagmv::Tree.new
     def tree.entries
       entry = Struct.new(:tags)
       entries = 2.times.map { entry.new(["foo", "bar", "baz", "zoo"]) }
@@ -33,7 +33,7 @@ class TreeTest < Minitest::Test
   end
 
   def test_tag_order
-    tree = TagMv::Tree.new
+    tree = Tagmv::Tree.new
     def tree.tag_counts
       {"foo"=>4, "bar"=>4, "baz"=>4, "zoo" => 5}
     end
@@ -45,22 +45,22 @@ class TreeTest < Minitest::Test
 
   #def test_regex_tags_in_path
   #  path = "/home/test/t/./dev./book./ruby./oh/shit./rails_antipatterns.pdf"
-  #  assert ["home/test/t/", "dev", "book", "ruby", "oh/shit"] == path.scan(TagMv::Filesystem.regex_tags_in_path)
+  #  assert ["home/test/t/", "dev", "book", "ruby", "oh/shit"] == path.scan(Tagmv::Filesystem.regex_tags_in_path)
   #end
 
   def test_extract_tags_from_path  
     path = "/home/test/t/./dev./book./ruby./oh/shit./rails_antipatterns.pdf"
     root = "/home/test/t/"
-    TagMv::Filesystem.root = root
-    tags = TagMv::Tree.tags(path)
+    Tagmv::Filesystem.root = root
+    tags = Tagmv::Tree.tags(path)
     assert tags == ["dev", "book", "ruby"]
   end
 
   def test_select_valid_paths
-    all_paths = [".", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/tag_mv", "./dev.", "./dev./book.", "./dev./book./javascript.", "./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby.", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby.", "./dev./ruby./tag_mv"]
+    all_paths = [".", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/tagmv", "./dev.", "./dev./book.", "./dev./book./javascript.", "./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby.", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby.", "./dev./ruby./tagmv"]
 
-    results = all_paths.select {|x| x =~ TagMv::Tree.path_has_file_regex }
-    valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./tag_mv"]
+    results = all_paths.select {|x| x =~ Tagmv::Tree.path_has_file_regex }
+    valid = ["./dev./book./javascript./Secrets_of_the_Javascript_Ninja.pdf", "./dev./book./ruby./rails_antipatterns.pdf", "./dev./ruby./tagmv"]
     assert results == valid
   end
 
@@ -68,7 +68,7 @@ class TreeTest < Minitest::Test
     before
     build_test_tree
 
-    tree = TagMv::Tree.scan_tree_entries
+    tree = Tagmv::Tree.scan_tree_entries
     assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "ruby"]], tree.entries.map {|x| x.tags }.uniq
 
     after
@@ -78,8 +78,8 @@ class TreeTest < Minitest::Test
     before
     build_test_tree
 
-    result = TagMv::Tree.scan_tree_hash
-    hash_tree = {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tag_mv"=>{}}}}
+    result = Tagmv::Tree.scan_tree_hash
+    hash_tree = {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tagmv"=>{}}}}
     assert_equal hash_tree, result
 
     after

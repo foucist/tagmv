@@ -1,6 +1,6 @@
 require 'find'
 
-module TagMv
+module Tagmv
   class Tree
     attr_accessor :entries
     def initialize(entries = [])
@@ -59,7 +59,7 @@ module TagMv
 
     # only gets existing tree, doesn't build an accurate tree based on all the tag counts etc..
     # Find.find('.').select {|x| x =~ /([^\/]+\/)*([^\/]+\/)*\.\/.*/}
-    # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tag_mv"=>{}}}}
+    # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tagmv"=>{}}}}
     def self.scan_tree_hash
       Dir.chdir(Filesystem.root)
       Dir["**/**./*"].inject({}) do |hash,path|

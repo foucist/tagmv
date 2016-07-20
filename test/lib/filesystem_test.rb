@@ -3,7 +3,7 @@ require 'test_helper'
 class FilesystemTest < Minitest::Test
   def before 
     @dir = Dir.mktmpdir
-    TagMv::Filesystem.root = @dir
+    Tagmv::Filesystem.root = @dir
   end
 
   def after
@@ -13,10 +13,10 @@ class FilesystemTest < Minitest::Test
 
   def test_it_uses_root_for_target_dir
     dir = '/tmp/foobar'
-    TagMv::Filesystem.root = dir
+    Tagmv::Filesystem.root = dir
     tags = ['a','b']
 
-    tfs = TagMv::Filesystem.new(tags: tags, files: [])
+    tfs = Tagmv::Filesystem.new(tags: tags, files: [])
     def tfs.tag_order; tags; end
 
     assert tfs.target_dir == "/tmp/foobar/a./b."
@@ -26,7 +26,7 @@ class FilesystemTest < Minitest::Test
     before
 
     tags = ['a', 'b', 'c']
-    tfs = TagMv::Filesystem.new(tags: tags, files: [])
+    tfs = Tagmv::Filesystem.new(tags: tags, files: [])
     def tfs.tag_order; tags; end
 
     assert File.exist?(tfs.target_dir) == false
@@ -43,7 +43,7 @@ class FilesystemTest < Minitest::Test
     file = File.join(@dir, 'timestamp')
     assert FileUtils.touch(file)
 
-    tfs = TagMv::Filesystem.new(tags: tags, files: [file])
+    tfs = Tagmv::Filesystem.new(tags: tags, files: [file])
     def tfs.tag_order; tags; end
 
     tfs.transfer

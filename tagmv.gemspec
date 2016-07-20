@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'tag_mv/version'
+require 'tagmv/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "tagmv"
-  spec.version       = TagMv::VERSION
+  spec.version       = Tagmv::VERSION
   spec.authors       = ["James Robey"]
   spec.email         = ["james.robey+tagmv@gmail.com"]
   spec.summary       = %q{Tag your files by moving them into a tree-like tag structure}

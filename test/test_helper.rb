@@ -2,7 +2,7 @@ require 'simplecov'
 SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'tag_mv'
+require 'tagmv'
 
 require 'minitest/autorun'
 require 'minitest/pride'

@@ -1,19 +1,19 @@
-module TagMv
+module Tagmv
   module Runner
     extend self
 
     def tree
-      @tree ||= TagMv::Tree.scan_tree_entries
+      @tree ||= Tagmv::Tree.scan_tree_entries
     end
 
     def update_tree
-      opts = TagMv::CommandLine.parse
+      opts = Tagmv::CommandLine.parse
       tree.with(opts)
     end
 
     def move_files
       tree.entries.each do |entry|
-        tfs = TagMv::Filesystem.new(tags: entry.tags, files: entry.files, tag_order: tree.tag_order)
+        tfs = Tagmv::Filesystem.new(tags: entry.tags, files: entry.files, tag_order: tree.tag_order)
         tfs.transfer
       end
     end
@@ -21,7 +21,7 @@ module TagMv
     def run
       update_tree
       move_files
-      TagMv::PrunePath.prune_tag_dirs
+      Tagmv::PrunePath.prune_tag_dirs
     end
   end
 end
