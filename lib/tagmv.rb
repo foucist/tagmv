@@ -1,7 +1,7 @@
 require 'tagmv/version'
 
-require 'tagmv/filesystem'
+require 'tagmv/config'
 require 'tagmv/entry'
-require 'tagmv/tree'
+require 'tagmv/filesystem'
 require 'tagmv/prune_path'
-
+require 'tagmv/tree'

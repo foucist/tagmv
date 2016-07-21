@@ -7,16 +7,21 @@ module Tagmv
       attr_accessor :root
     end
 
-    attr_accessor :tags, :files, :tag_order
+    attr_reader :tags, :files, :tag_order, :top_level_tags
     def initialize(opts={})
       @tags =  opts[:tags].map {|t| scrub_tag(t) }
       @files = opts[:files].map {|f| File.expand_path(f) }.select {|f| File.exist?(f) }
       @tag_order = opts[:tag_order]
+      @top_level_tags = opts[:top_level_tags]
     end
 
     def scrub_tag(tag)
       # only keep legit file characters & remove trailing periods
       tag.gsub(/[^0-9A-Za-z\.\-\_]|[\.]+$/, '')
+    end
+
+    def tag_order
+      top_level_tags | @tag_order
     end
 
     def tag_dirs
