@@ -1,12 +1,12 @@
 # Tagmv
 
-File tagging by moving files into tag-based directories.
+The ultimate keep-your-files-organized solution!
 
-The directories that represent tags are organized hierarchically (either by # of items that have the tag or some other method).
+Moves your files into directories that represent tags, these tags are kept organized as a hierarchy according to tag counts.
 
-- Organizes using the plain file system
-- Extremely flexible (no tag limit, no tag naming restrictions, hierarchical tags, no file naming restrictions, can tag all files and directories).
-- Transparent to other applications, since it works directly with the file system.
+Tag all your files with multiple tags, and watch them end up organized!
+
+Works using the most basic parts of the filesystem - no FUSE, no symbolic or hard links.
 
 ## Installation
 
@@ -14,13 +14,27 @@ The directories that represent tags are organized hierarchically (either by # of
 
 ## Usage
 
-    $ tag <files/directories> -t <tags>
+    $ tagmv file1 file2 directory1 directory2 -t tag1 tag2 tag3
 
-## Development
+This will move your files and directories into:
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+    ~/t/tag1./tag2./tag3./
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+As you tag more files and folders, it will order the tag directories according to the most popular tags, keeping things organized for you.
+
+## Current features
+
+Default directory is "~/t/" (not configurable yet, oops)
+
+Supports top level tags - so that you can "pin" certain tags to be the top level directory
+
+Config file: ~/.tagmv.yml   currently supports the top level tags (no easy way to update config yet)
+
+
+## Upcoming features
+
+Dealing with tags - remove specific tags, rename/merge similar tags, listing tags, etc.
+
 
 ## Contributing
 
