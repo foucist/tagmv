@@ -10,7 +10,7 @@ module Tagmv
       header "Options:"
 
       footer ""
-      footer "tagmv by James Robey (https://github.com/foucist/tagmv/)"
+      footer "tagmv by #{Tagmv::AUTHORS.join(', ')} (#{Tagmv::HOMEPAGE})"
 
       option :tags, :required => true do
         short '-t'

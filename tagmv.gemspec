@@ -6,11 +6,11 @@ require 'tagmv/version'
 Gem::Specification.new do |spec|
   spec.name          = "tagmv"
   spec.version       = Tagmv::VERSION
-  spec.authors       = ["James Robey"]
+  spec.authors       = Tagmv::AUTHORS
   spec.email         = ["james.robey+tagmv@gmail.com"]
   spec.summary       = %q{Tag your files by moving them into a tree-like tag structure}
   spec.description   = %q{Moves your files into directories that represent tags, these tags are kept organized as a hierarchy according to tag counts}
-  spec.homepage      = "https://github.com/foucist/tagmv/"
+  spec.homepage      = Tagmv::HOMEPAGE
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
