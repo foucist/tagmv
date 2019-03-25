@@ -18,7 +18,7 @@ Works using the most basic parts of the filesystem - no FUSE, no symbolic or har
 
 This will move your files and directories into:
 
-    ~/t/tag1./tag2./tag3./
+    ~/t/tag1-/tag2-/tag3-/
 
 As you tag more files and folders, it will order the tag directories according to the most popular tags, keeping things organized for you.
 

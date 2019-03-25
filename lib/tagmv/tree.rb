@@ -22,14 +22,14 @@ module Tagmv
 
     def self.false_tag_regex
       # detect when there's a false tag i.e. tag2. in path/to/tag1./not_a_tag/tag2./
-      /\/.+\.\/[^.]+\/.+\./
+      /\/.+\-\/[^.]+\/.+\-/
     end
     def self.tags_in_path_regex
-      /[^\.\/]\K.+?(?=\.\/)/
+      /[^(\.|\-)\/]\K.+?(?=\-\/)/
     end
 
     def self.path_has_file_regex
-      /#{tags_in_path_regex}.*[^\.]$/
+      /#{tags_in_path_regex}.*[^\-]$/
     end
 
     def self.tags(file)
@@ -51,7 +51,7 @@ module Tagmv
       files = Find.find(Filesystem.root).select {|x| x =~ path_has_file_regex }
       tree = Tree.new
       files.map do |file|
-        next if file =~ /\/.+\.\/[^.]+\/.+\./  # break when /dev./oh/blah./foo
+        next if file =~ /\/.+\-\/[^-]+\/.+\-/  # break when /dev./oh/blah./foo
         tree.with(files: [file], tags: tags(file))
       end
       tree
@@ -62,12 +62,12 @@ module Tagmv
     # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tagmv"=>{}}}}
     def self.scan_tree_hash
       Dir.chdir(Filesystem.root)
-      Dir["**/**./*"].inject({}) do |hash,path|
+      Dir["**/**-/*"].inject({}) do |hash,path|
         tree = hash
         path.split("/").each do |n|
           tree[n] ||= {}
           tree = tree[n]
-          break if n[-1] != "."
+          break if n[-1] != "-"
         end
         hash
       end
