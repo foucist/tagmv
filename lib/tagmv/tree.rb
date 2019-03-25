@@ -25,7 +25,7 @@ module Tagmv
       /\/.+\.\/[^.]+\/.+\./
     end
     def self.tags_in_path_regex
-      /\/\K.+?(?=\.\/)/
+      /[^\.\/]\K.+?(?=\.\/)/
     end
 
     def self.path_has_file_regex

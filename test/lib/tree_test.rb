@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'pry'
 
 class TreeTest < Minitest::Test
   def before 
