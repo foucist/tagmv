@@ -11,7 +11,7 @@ class TreeTest < Minitest::Test
   end
 
   def build_test_tree
-    files = ["dev-/book-/ruby-/rails_antipatterns.pdf", "dev-/ruby-/tagmv/", "dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "dev-/ruby-/oh/snap-/foobar"]
+    files = ["dev-/book-/ruby-/rails_antipatterns.pdf", "dev-/ruby-/tagmv/", "dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "dev-/ruby-/oh/snap-/foobar", "dev-/-/wha-", "dev-/j-/who-"]
     files.each do |file|
       path = File.join(@dir, file)
       if file[-1] == "/"

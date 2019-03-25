@@ -65,6 +65,7 @@ module Tagmv
       Dir["**/**-/*"].inject({}) do |hash,path|
         tree = hash
         path.split("/").each do |n|
+          break if /^.{0,1}?-/ =~ n
           tree[n] ||= {}
           tree = tree[n]
           break if n[-1] != "-"
