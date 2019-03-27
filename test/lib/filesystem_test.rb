@@ -19,7 +19,7 @@ class FilesystemTest < Minitest::Test
     tfs = Tagmv::Filesystem.new(tags: tags, files: [])
     def tfs.tag_order; tags; end
 
-    assert tfs.target_dir == "/tmp/foobar/a./b."
+    assert tfs.target_dir == "/tmp/foobar/a-/b-"
   end
 
   def test_it_makes_tag_dirs

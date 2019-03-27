@@ -22,8 +22,10 @@ module Tagmv
 
     def self.false_tag_regex
       # detect when there's a false tag i.e. tag2. in path/to/tag1./not_a_tag/tag2./
-      /\/.+\-\/[^.]+\/.+\-/
+      /\/.+-\/[^-]+\/.+-/
+      #/\/(.*[^-]\/|[^\/]{0,1}?-)/
     end
+
     def self.tags_in_path_regex
       /[^(\.|\-)\/]\K.+?(?=\-\/)/
     end
@@ -37,21 +39,11 @@ module Tagmv
       file[Filesystem.root.length..-1].scan(tags_in_path_regex).reject {|x| x =~ /\//}
     end
 
-    def self.empty_dirs
-      files = Find.find(Filesystem.root).select {|x| x =~ path_has_file_regex }
-      tree = Tree.new
-      files.map do |file|
-        next if file =~ false_tag_regex
-        tree.with(files: [file], tags: tags(file))
-      end
-      tree
-    end
-
     def self.scan_tree_entries
       files = Find.find(Filesystem.root).select {|x| x =~ path_has_file_regex }
       tree = Tree.new
       files.map do |file|
-        next if file =~ /\/.+\-\/[^-]+\/.+\-/  # break when /dev./oh/blah./foo
+        next if file =~ false_tag_regex  # break when /dev./oh/blah./foo
         tree.with(files: [file], tags: tags(file))
       end
       tree

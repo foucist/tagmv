@@ -6,7 +6,7 @@ module Tagmv
     end
 
     def tag_dir?
-      path =~ /\.$/ && path !~ Tagmv::Tree.false_tag_regex
+      path =~ /..-$/ && path !~ Tagmv::Tree.false_tag_regex
     end
 
     def empty_dir?
