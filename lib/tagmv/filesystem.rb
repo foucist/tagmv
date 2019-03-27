@@ -11,6 +11,7 @@ module Tagmv
     def initialize(opts={})
       @tags =  scrub_tags(opts[:tags])
       @files = opts[:files]
+      @dry_run = opts[:dry_run]
       @tag_order = opts[:tag_order]
       @top_level_tags = opts[:top_level_tags]
     end
@@ -38,7 +39,7 @@ module Tagmv
     end
 
     def tag_dirs
-      (tag_order & tags).map {|x| x.gsub(/$/, '.') }
+      (tag_order & tags).map {|x| x.gsub(/$/, '-') }
     end
 
     def target_dir
@@ -46,16 +47,25 @@ module Tagmv
     end
 
     def prepare_dir
-      FileUtils.mkdir_p(target_dir) 
+      FileUtils.mkdir_p(target_dir, options) 
     end
 
     def move_files
-      FileUtils.mv(scrub_files(files), target_dir)
+      FileUtils.mv(scrub_files(files), target_dir, options)
     rescue ArgumentError
     end
 
     def transfer
       prepare_dir && move_files
+    end
+
+    private
+    def options
+      if @dry_run
+        {noop: true, verbose: true}
+      else
+        {}
+      end
     end
   end
 end
