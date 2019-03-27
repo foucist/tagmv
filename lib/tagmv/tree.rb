@@ -62,10 +62,12 @@ module Tagmv
     # {"dev."=>{"book."=>{"javascript."=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby."=>{"rails_antipatterns.pdf"=>{}}}, "ruby."=>{"oh"=>{}, "tagmv"=>{}}}}
     def self.scan_tree_hash
       Dir.chdir(Filesystem.root)
-      Dir["**/**-/*"].inject({}) do |hash,path|
+      
+      # reject /dev-/-, /dev-/j-/ and /dev-/notag/tag-
+      paths = Dir["**/*"].delete_if {|x| /\/(.*[^-]\/|[^\/]{0,1}?-)/ =~ x}
+      paths.inject({}) do |hash,path|
         tree = hash
         path.split("/").each do |n|
-          break if /^.{0,1}?-/ =~ n
           tree[n] ||= {}
           tree = tree[n]
           break if n[-1] != "-"

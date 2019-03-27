@@ -11,7 +11,7 @@ class TreeTest < Minitest::Test
   end
 
   def build_test_tree
-    files = ["dev-/book-/ruby-/rails_antipatterns.pdf", "dev-/ruby-/tagmv/", "dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "dev-/ruby-/oh/snap-/foobar", "dev-/-/wha-", "dev-/j-/who-"]
+    files = ["dev-/book-/ruby-/rails_antipatterns.pdf", "dev-/ruby-/tagmv/", "dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "dev-/ruby-/oh/snap-/foobar", "dev-/-/wha-", "dev-/j-/who-", "dev-/notatag/notatag-/notatag", "dev-/foo-/bar-/baz-/wuz-/wak"]
     files.each do |file|
       path = File.join(@dir, file)
       if file[-1] == "/"
@@ -58,10 +58,10 @@ class TreeTest < Minitest::Test
   end
 
   def test_select_valid_paths
-    all_paths = ["-", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/tagmv", "./dev-", "./dev-/book-", "./dev-/book-/javascript-", "./dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "./dev-/book-/ruby-", "./dev-/book-/ruby-/rails_antipatterns.pdf", "./dev-/ruby-", "./dev-/ruby-/tagmv"]
+    all_paths = ["-", "./.hidden", "./dev", "./dev/book", "./dev/book/javascript", "./dev/book/javascript/Secrets_of_the_Javascript_Ninja.pdf", "./dev/book/ruby", "./dev/book/ruby/rails_antipatterns.pdf", "./dev/ruby", "./dev/ruby/tagmv", "./dev-", "./dev-/book-", "./dev-/book-/javascript-", "./dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "./dev-/book-/ruby-", "./dev-/book-/ruby-/rails_antipatterns.pdf", "./dev-/ruby-", "./dev-/ruby-/tagmv", "./dev-/foo-/bar-/baz-/wuz-/wak"]
 
     results = all_paths.select {|x| x =~ Tagmv::Tree.path_has_file_regex }
-    valid = ["./dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "./dev-/book-/ruby-/rails_antipatterns.pdf", "./dev-/ruby-/tagmv"]
+    valid = ["./dev-/book-/javascript-/Secrets_of_the_Javascript_Ninja.pdf", "./dev-/book-/ruby-/rails_antipatterns.pdf", "./dev-/ruby-/tagmv", "./dev-/foo-/bar-/baz-/wuz-/wak"]
     assert results == valid
   end
 
@@ -70,7 +70,7 @@ class TreeTest < Minitest::Test
     build_test_tree
 
     tree = Tagmv::Tree.scan_tree_entries
-    assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "ruby"]], tree.entries.map {|x| x.tags }.uniq
+    assert_equal [["dev", "book", "javascript"], ["dev", "book", "ruby"], ["dev", "foo", "bar", "baz", "wuz"], ["dev"], ["dev", "ruby"]], tree.entries.map {|x| x.tags }.uniq
 
     after
   end
@@ -80,7 +80,16 @@ class TreeTest < Minitest::Test
     build_test_tree
 
     result = Tagmv::Tree.scan_tree_hash
-    hash_tree = {"dev-"=>{"book-"=>{"javascript-"=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby-"=>{"rails_antipatterns.pdf"=>{}}}, "ruby-"=>{"oh"=>{}, "tagmv"=>{}}}}
+    hash_tree = {
+      "dev-"=>
+      {
+        "foo-"=>{"bar-"=>{"baz-"=>{"wuz-"=>{"wak"=>{}}}}},
+        "notatag"=>{},
+        "book-"=>{"javascript-"=>{"Secrets_of_the_Javascript_Ninja.pdf"=>{}}, "ruby-"=>{"rails_antipatterns.pdf"=>{}}},
+        "ruby-"=>{"tagmv"=>{}, "oh"=>{}}
+      }
+    }
+
     assert_equal hash_tree, result
 
     after
