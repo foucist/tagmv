@@ -22,7 +22,7 @@ module Tagmv
       tags.map {|t| t.gsub(bad_chars, '') }.uniq
     end
 
-    def scrub_files(files)
+    def scrub_files
       files.select do |file|
         path = File.expand_path(file)
         if File.exist?(path)
@@ -51,7 +51,7 @@ module Tagmv
     end
 
     def move_files
-      FileUtils.mv(scrub_files(files), target_dir, options)
+      FileUtils.mv(scrub_files, target_dir, options)
     rescue ArgumentError
     end
 
