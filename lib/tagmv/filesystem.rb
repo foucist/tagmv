@@ -36,6 +36,8 @@ module Tagmv
     end
 
     def tags_in_order
+      return tags unless reorder
+
       (top_level_tags | tag_order) & tags
     end
 

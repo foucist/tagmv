@@ -41,7 +41,7 @@ module Tagmv
     end
 
     def parse
-      return Choice.help if Choice.choices.empty? || Choice.rest.empty?
+      return Choice.help if !Choice.choices[:reorder] && (Choice.choices.empty? || Choice.rest.empty?)
 
       opts = Hash.new
       opts[:files]   = Choice.rest

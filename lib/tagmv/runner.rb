@@ -11,13 +11,13 @@ module Tagmv
 
     def move_new_files
       tree.entries << Entry.new(options)
-      fs_options = options.merge(tag_order: tree.tag_order)
+      fs_options = options.merge(tag_order: tree.tag_order, reorder: false)
       Tagmv::Filesystem.new(fs_options).transfer
     end
 
     def run
-      reorder_files
-      move_new_files
+      reorder_files if !options[:skip_moves]
+      move_new_files if !options[:files].empty?
       Tagmv::PrunePath.prune_tag_dirs
     end
 
