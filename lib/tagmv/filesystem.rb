@@ -34,12 +34,12 @@ module Tagmv
       end
     end
 
-    def tag_order
-      top_level_tags | @tag_order
+    def tags_in_order
+      (top_level_tags | tag_order) & tags
     end
 
     def tag_dirs
-      (tag_order & tags).map {|x| x.gsub(/$/, '-') }
+      tags_in_order.map {|x| x.gsub(/$/, '-') }
     end
 
     def target_dir

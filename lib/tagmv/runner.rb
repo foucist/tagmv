@@ -2,27 +2,22 @@ module Tagmv
   module Runner
     extend self
 
-    def add_new_entries
-      tree.with(options)
-    end
-
-    def update_options
-      @options.merge!(tag_order: tree.tag_order)
-    end
-
-    def move_files
+    def reorder_files
       tree.entries.each do |entry|
-        tfs = Tagmv::Filesystem.new(
-          options.merge(tags: entry.tags, files: entry.files)
-        )
-        tfs.transfer
+        fs_options = options.merge(tags: entry.tags, files: entry.files, tag_order: tree.tag_order)
+        Tagmv::Filesystem.new(fs_options).transfer
       end
     end
 
+    def move_new_files
+      tree.entries << Entry.new(options) # tree.with(options)
+      fs_options = options.merge(tag_order: tree.tag_order)
+      Tagmv::Filesystem.new(fs_options).transfer
+    end
+
     def run
-      add_new_entries
-      update_options
-      move_files
+      reorder_files
+      move_new_files
       Tagmv::PrunePath.prune_tag_dirs
     end
 

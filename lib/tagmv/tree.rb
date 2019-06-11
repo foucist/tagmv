@@ -34,17 +34,21 @@ module Tagmv
       /#{tags_in_path_regex}.*[^\-]$/
     end
 
+    def self.file_in_tag_dir
+      /.+(\-\/[^\/]+)$/
+    end
+
     def self.tags(file)
       raise StandardError.new('Invalid file path given') unless file[/^#{Filesystem.root}/]
       file[Filesystem.root.length..-1].scan(tags_in_path_regex).reject {|x| x =~ /\//}
     end
 
     def self.scan_tree_entries
-      files = Find.find(Filesystem.root).select {|x| x =~ path_has_file_regex }
+      files = Find.find(Filesystem.root).select {|x| x =~ path_has_file_regex }.select {|x| x =~ file_in_tag_dir }
       tree = Tree.new
-      files.map do |file|
+      files.each do |file|
         next if file =~ false_tag_regex  # break when /dev./oh/blah./foo
-        tree.with(files: [file], tags: tags(file))
+        tree.entries << Entry.new(files: [file], tags: tags(file))
       end
       tree
     end
