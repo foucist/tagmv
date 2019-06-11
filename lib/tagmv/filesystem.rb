@@ -7,11 +7,12 @@ module Tagmv
       attr_accessor :root
     end
 
-    attr_reader :tags, :files, :tag_order, :top_level_tags
+    attr_reader :tags, :files, :reorder, :tag_order, :top_level_tags
     def initialize(opts={})
       @tags =  scrub_tags(opts[:tags])
       @files = opts[:files]
       @dry_run = opts[:dry_run]
+      @reorder = opts[:reorder]
       @tag_order = opts[:tag_order]
       @top_level_tags = opts[:top_level_tags]
     end
@@ -55,7 +56,7 @@ module Tagmv
 
     def move_files
       # skip duplicate moves
-      return if scrub_files.size == 1 && (scrub_files.first.sub(target_dir + '/','') !=~ /\//)
+      return if reorder && scrub_files.size == 1 && (scrub_files.first.sub(target_dir + '/','') !=~ /\//)
 
       FileUtils.mv(scrub_files, target_dir, options)
     rescue ArgumentError

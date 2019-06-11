@@ -4,13 +4,13 @@ module Tagmv
 
     def reorder_files
       tree.entries.each do |entry|
-        fs_options = options.merge(tags: entry.tags, files: entry.files, tag_order: tree.tag_order)
+        fs_options = options.merge(tags: entry.tags, files: entry.files, tag_order: tree.tag_order, reorder: true)
         Tagmv::Filesystem.new(fs_options).transfer
       end
     end
 
     def move_new_files
-      tree.entries << Entry.new(options) # tree.with(options)
+      tree.entries << Entry.new(options)
       fs_options = options.merge(tag_order: tree.tag_order)
       Tagmv::Filesystem.new(fs_options).transfer
     end
