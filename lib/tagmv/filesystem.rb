@@ -47,10 +47,16 @@ module Tagmv
     end
 
     def prepare_dir
-      FileUtils.mkdir_p(target_dir, options) 
+      @@prepare_dir ||= Hash.new do |h, key|
+        h[key] = FileUtils.mkdir_p(key, options)
+      end
+      @@prepare_dir[target_dir]
     end
 
     def move_files
+      # skip duplicate moves
+      return if scrub_files.size == 1 && (scrub_files.first.sub(target_dir + '/','') !=~ /\//)
+
       FileUtils.mv(scrub_files, target_dir, options)
     rescue ArgumentError
     end
