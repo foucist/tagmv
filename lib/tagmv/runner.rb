@@ -16,8 +16,8 @@ module Tagmv
     end
 
     def run
-      reorder_files if !options[:skip_moves]
-      move_new_files if !options[:files].empty?
+      reorder_files unless options[:skip_reorder]
+      move_new_files unless options[:files].empty?
       Tagmv::PrunePath.prune_tag_dirs
     end
 

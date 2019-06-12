@@ -24,13 +24,13 @@ module Tagmv
       option :reorder do
         short '-r'
         long '--reorder'
-        desc 'Organize all tagged files & directories into order'
+        desc 'Move all tagged files & directories into order of tag usage [default]'
       end
 
-      option :skip_moves do
+      option :skip_reorder do
         short '-s'
-        long '--skip-moves'
-        desc "Skip moving existing tagged files into new tag order.  [for example: you are editing tagged files and don't want them moved around yet]"
+        long '--skip-reorder'
+        desc "Skip reorder (for example: you are editing tagged files and don't want them moved around yet)"
       end
 
       option :tags do
@@ -48,7 +48,7 @@ module Tagmv
       opts[:dry_run] = Choice.choices[:dry_run]
       opts[:tags]    = Choice.choices[:tags]
       opts[:reorder] = Choice.choices[:reorder]
-      opts[:skip_moves]= Choice.choices[:skip_moves]
+      opts[:skip_reorder]= Choice.choices[:skip_reorder]
       opts
     end
   end

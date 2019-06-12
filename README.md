@@ -2,11 +2,11 @@
 
 The ultimate keep-your-files-organized solution!
 
-Moves your files into directories that represent tags, these tags are kept organized as a hierarchy according to tag counts.
+Moves your files into directories that represent tags, these tags are kept organized as a hierarchy according to usage.
 
 Tag all your files with multiple tags, and watch them end up organized!
 
-Works using the most basic parts of the filesystem - no FUSE, no symbolic or hard links.
+Relies on convention-only, no FUSE, no symbolic links, no hard links.  No special tools required.
 
 ## Installation
 
@@ -20,15 +20,27 @@ This will move your files and directories into:
 
     ~/t/tag1-/tag2-/tag3-/
 
-As you tag more files and folders, it will order the tag directories according to the most popular tags, keeping things organized for you.
+As you tag more files and folders, it will re-order the tag directories by the most commonly used tags, keeping your files automatically organized for you.
 
 ## Current features
 
-Default directory is "~/t/" (not configurable yet, oops)
+Default root directory for all your tagged files is `~/t/` (not configurable yet)
 
-Supports top level tags - so that you can "pin" certain tags to be the top level directory
+## Configuration
 
-Config file: ~/.tagmv.yml   currently supports the top level tags (no easy way to update config yet)
+Configuration file: `~/.tagmv.yml`
+
+Supports top level tags - so that you can "pin" certain tags to always show as the top level directories within `~/t/`
+
+## Commands
+
+`-d, --dry-run` Check to see what gets moved where
+
+`-r, --reorder` **[default]** Move everything in `~/t/` into order of tag usage (example: `tagmv -r`)
+
+`-s, --skip-reorder` Skip reorder (e.g. you are editing tagged files and don't want them moved around yet)
+
+`-t, --tags *tags` Tags for your files or directories, as many as you want
 
 
 ## Upcoming features
