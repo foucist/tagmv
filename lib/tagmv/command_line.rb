@@ -5,15 +5,16 @@ module Tagmv
     extend self
 
     Choice.options do
-      header "A Directory-based Tagging Organizer"
       header ""
-      header "Usage:"
+      header "A Directory-based Tagging Organizer."
+      header ""
+      header "Example:"
       header "    $ tagmv file1 file2 directory1 directory2 -t tag1 tag2 tag3 -d"
       header ""
       header "Options:"
 
       footer ""
-      footer "tagmv by #{Tagmv::AUTHORS.join(', ')} (#{Tagmv::HOMEPAGE})"
+      footer "tagmv v#{Tagmv::VERSION} by #{Tagmv::AUTHORS.join(', ')} (#{Tagmv::HOMEPAGE})"
 
       option :dry_run do
         short '-d'
@@ -30,7 +31,7 @@ module Tagmv
       option :skip_reorder do
         short '-s'
         long '--skip-reorder'
-        desc "Skip reorder (for example: you are editing tagged files and don't want them moved around yet)"
+        desc "Skip reorder. For example, you have tagged files open in editor and don't want them moved yet."
       end
 
       option :tags do
